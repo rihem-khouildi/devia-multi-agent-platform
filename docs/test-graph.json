@@ -1,0 +1,184 @@
+{
+  "entities": [
+    {
+      "name": "User",
+      "type": "entity",
+      "description": "JPA entity representing a platform user with name, email and password",
+      "user_story_refs": ["TEST-5"]
+    },
+    {
+      "name": "UserRepository",
+      "type": "repository",
+      "description": "Spring Data JPA repository for User entity - created in TEST-5, reused in TEST-6, TEST-7, TEST-8, TEST-9",
+      "user_story_refs": ["TEST-5", "TEST-6", "TEST-7", "TEST-8", "TEST-9"]
+    },
+    {
+      "name": "UserService",
+      "type": "service",
+      "description": "Service layer for user management - created in TEST-5, reused in TEST-6",
+      "user_story_refs": ["TEST-5", "TEST-6"]
+    },
+    {
+      "name": "UserController",
+      "type": "controller",
+      "description": "REST controller exposing POST /users (TEST-5) and GET /users (TEST-6)",
+      "user_story_refs": ["TEST-5", "TEST-6"]
+    },
+    {
+      "name": "AuthController",
+      "type": "controller",
+      "description": "REST controller exposing POST /auth/login with username and password validation",
+      "user_story_refs": ["TEST-7"]
+    },
+    {
+      "name": "AuthService",
+      "type": "service",
+      "description": "Service handling login logic, validates credentials against UserRepository",
+      "user_story_refs": ["TEST-7"]
+    },
+    {
+      "name": "RegistrationController",
+      "type": "controller",
+      "description": "REST controller exposing POST /register with email uniqueness validation",
+      "user_story_refs": ["TEST-8"]
+    },
+    {
+      "name": "RegistrationService",
+      "type": "service",
+      "description": "Service handling user registration, checks email uniqueness via UserRepository",
+      "user_story_refs": ["TEST-8"]
+    },
+    {
+      "name": "DashboardController",
+      "type": "controller",
+      "description": "REST controller exposing GET /dashboard/stats returning application statistics",
+      "user_story_refs": ["TEST-9"]
+    },
+    {
+      "name": "DashboardService",
+      "type": "service",
+      "description": "Service computing statistics such as total users count from UserRepository",
+      "user_story_refs": ["TEST-9"]
+    }
+  ],
+  "relations": [
+    {
+      "source": "UserController",
+      "target": "UserService",
+      "type": "uses"
+    },
+    {
+      "source": "UserService",
+      "target": "UserRepository",
+      "type": "uses"
+    },
+    {
+      "source": "UserRepository",
+      "target": "User",
+      "type": "manages"
+    },
+    {
+      "source": "AuthController",
+      "target": "AuthService",
+      "type": "uses"
+    },
+    {
+      "source": "AuthService",
+      "target": "UserRepository",
+      "type": "uses",
+      "description": "reuses UserRepository created in TEST-5"
+    },
+    {
+      "source": "RegistrationController",
+      "target": "RegistrationService",
+      "type": "uses"
+    },
+    {
+      "source": "RegistrationService",
+      "target": "UserRepository",
+      "type": "uses",
+      "description": "reuses UserRepository created in TEST-5"
+    },
+    {
+      "source": "DashboardController",
+      "target": "DashboardService",
+      "type": "uses"
+    },
+    {
+      "source": "DashboardService",
+      "target": "UserRepository",
+      "type": "uses",
+      "description": "reuses UserRepository created in TEST-5"
+    }
+  ],
+  "stories": {
+    "TEST-5": {
+      "files": [
+        "User.java",
+        "UserRepository.java",
+        "UserService.java",
+        "UserController.java"
+      ],
+      "tests": [
+        "UserControllerTest.java"
+      ],
+      "modules": [
+        "users"
+      ]
+    },
+    "TEST-6": {
+      "files": [
+        "UserController.java",
+        "UserService.java"
+      ],
+      "tests": [
+        "UserControllerTest.java"
+      ],
+      "modules": [
+        "users"
+      ],
+      "depends_on": ["TEST-5"]
+    },
+    "TEST-7": {
+      "files": [
+        "AuthController.java",
+        "AuthService.java"
+      ],
+      "tests": [
+        "AuthControllerTest.java"
+      ],
+      "modules": [
+        "authentication"
+      ],
+      "depends_on": ["TEST-5"]
+    },
+    "TEST-8": {
+      "files": [
+        "RegistrationController.java",
+        "RegistrationService.java"
+      ],
+      "tests": [
+        "RegistrationServiceTest.java"
+      ],
+      "modules": [
+        "registration",
+        "users"
+      ],
+      "depends_on": ["TEST-5"]
+    },
+    "TEST-9": {
+      "files": [
+        "DashboardController.java",
+        "DashboardService.java"
+      ],
+      "tests": [
+        "DashboardControllerTest.java"
+      ],
+      "modules": [
+        "dashboard",
+        "users"
+      ],
+      "depends_on": ["TEST-5", "TEST-6"]
+    }
+  }
+}

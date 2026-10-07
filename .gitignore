@@ -1,0 +1,40 @@
+# Environnement
+.env
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build / output
+output/
+dist/
+build/
+frontend/dist/
+frontend/node_modules/
+
+# Logs
+*.log
+
+# Outils locaux
+.tools/
+
+rapport_pfe_Rihem/
+powerpoint/
+Rapport_exemple.pdf
+# SQLite local fallback
+devia_local.db
+
+# Maven build output
+target/
